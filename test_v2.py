@@ -4,9 +4,9 @@ import sys
 #Based on simple_smpc.py but abstracted to allow any device and rule to be added
 
 #ASSUMPTIONS:
-#-only two parties, thermostat(mpc.pid 0) and lightbulb(mpc.pid 1)
-#-inputs passed in will be valid
-#     e.g. the lightbulb cannot pass in a non-zero value for temp. (zero is the default)
+#-each device/party only has one value that it inputs
+#-each passed in value is valid
+#   e.g. a boolean valuen is boolean, not some other int
 #-all passed in values are integers (I don't think secure floats and secure ints can be compared)
 
  
@@ -18,58 +18,31 @@ async def main():
 
   await mpc.start()
 
-  #collect inputs for each party
-  #each party has the same input arguments
-  #arg1 = temperature
-  #arg2 = if light is on
-
+  #determine the number of connecting parties
   party_num = len(mpc.parties)
-  sec_list = [0]*party_num
 
+  #make a list initialized with # 0s == # parties
+  sec_list = [secint(0)]*party_num
+
+  #
   for party in range(party_num):
-    sec_list[party] = secint(int(sys.argv[party+1])) if sys.argv[party+1:] else 0
+    if(mpc.pid ==party):
+      sec_list[party] = secint(int(sys.argv[1])) if sys.argv[1:] else 0
   
   print(sec_list)
 
-  # we store the inputs of each argument as secure lists,
-  #BUT by our construction, each list will have all 0s 
-  #except for the one value from the device that reflects that parameter
-  #    e.g. arg1 is the temp value for the thermostat, so only the thermostat
-  #    deivce would pass in a temp value and the other devices/parties would pass in 0
-
-  sec_temp_list = mpc.input(temp, [0,1])
-  sec_light_list = mpc.input(light_state, [0,1])
-
-
-  #we sum the lists so now each party has access to each value passed in by each party
-  #(again because by our contruction each list only has one non-zero value)
-  #becuase the lists are secure, these values are also secure
-  #so each party can't determine what the other parties passed in
-
-  total_light_on = sum(sec_light_list)
-  total_temp = sum(sec_temp_list)
-
-
-  #arbitrary temp threshold
-  threshold = secint(80)
-  light_on = secint(1)
-
-  temp_check = (total_temp > threshold)
-  light = (light_on == total_light_on)
-
-
-  # if temp high (1), light should be off (0)
-  # if temp low (0), light should be on (1)
-  # thus, if both are 0s or both are 1s, the light should change states
-  change_light_state = (light == temp_check)
+  for party in range(party_num):
+    sec_list[party] = mpc.input(sec_list[party], range(party_num))
   
+  print(sec_list)
 
-  #assumes mpc.pid==0 for thermostat and mpc.pid == 1 for lightbulb
-  #passes respective outputs to respective parties
-  if (mpc.pid == 0):
-    print('Temp high?:',await mpc.output(temp_check))
-  if (mpc.pid == 1):
-    print('Change light state?:',await mpc.output(change_light_state))
+  #generate some list of thresholds
+
+  #there should be a way to add a device such that you can easily add rules that determine its functionality
+  #start by being able to handle any number of devices given their thresholds
+  #I think if you check if each is less than their threshold, making the threshold 1, for booleans and arbitrary otherwise
+  #then we can abstract that comparison for each deivce
+  # we can then put all these boolean values in a list and act accordingly, ANDing/ORing the necessary list components through mult/addition
 
   await mpc.shutdown()
 
