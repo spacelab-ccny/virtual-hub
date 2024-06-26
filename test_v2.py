@@ -23,25 +23,46 @@ async def main():
   print(party_num)
 
   #make a list initialized with # 0s == # parties
-  sec_list = [secint(0)]*party_num
+  #sec_list = [secint(0)]*party_num
 
   #for each device/party set sec_list to be a list of all 0s (as initialized) with
   #the value at index==mpc.party being the meaningful argument for that device
-  #[assuming each device only has one meaningul input to the computation]
-  print("check1")
-  for party in range(party_num):
-    if(mpc.pid ==party):
-      sec_list[party] = secint(int(sys.argv[1])) if sys.argv[1:] else 0
+  #[assuming each device only has one meaningful input to the computation]
+  
+  sec_list =[]
+  print(f"arg: {sys.argv[1]}")
+  #get value of argument for this party
+  val = secint(int(sys.argv[1])) if sys.argv[1:] else secint(0)
+  print(f"VAL : {val}")
+  #check the value against the arbitrary threshold value
+  #but how do we index into a list to get it?
+  # or else is it passed in with the party?
+
+
+  sec_list = mpc.input(val, range(party_num))
+  num = mpc.pid
+  id_list = mpc.input(secint(num), range(party_num))
+  print('mpc.pid', await mpc.output(id_list))
+  print(mpc.pid)
+  for i in range(party_num):
+    if (mpc.pid ==i):
+      get = sec_list[i]
+
+  b = mpc.input(get, range(party_num))
+  j=0
+  while j < party_num:
+    if(mpc.pid == j):
+      x = sec_list[j]
+    j = j+1
+  
+  #c = await sec_list[party_num-1]
+  a = await mpc.output(sec_list[mpc.pid])
+
+  print(f"sec_list{sec_list}")
+  print('Beneath threshold?:',await mpc.output(sec_list))
+  #print('mmmmmmmmmmmmmm?:',await mpc.output(a))
   
   print("check2")
-  for party in range(party_num):
-    #combine the element of sec_list at index=party from each party/device into one list
-    #and make sec_list[party] = this list of all 0s except for one meaningful value
-    sec_list[party] = mpc.input(sec_list[party], range(party_num))
-
-    #sum the values at each index of sec_list so that now sec_list is a list of all the meaningful values from each party
-    #where each index of sec_list corresponds to the party from which that meaningful value was taken
-    sec_list[party] = sum(sec_list[party])
 
   print("check3")
   #generate some list of thresholds
@@ -58,7 +79,22 @@ async def main():
     print("--------")
     print(check_vals[party])
 
-  print(mpc.pid)  
+  #can get unsecure version of int at any single predetermined index:
+  s = await mpc.output(sec_list[0])
+  print(f"testing: {s}")
+
+
+
+  count = mpc.pid
+  print(count)
+  # cen get unsecure version of int in sec_list for all elements in list
+  for i in range(party_num):
+    ss = await mpc.output(sec_list[i])
+    print(f"testing: {ss}")
+    if i == count:
+      print(f"SECRET: {sec_list[i]}")
+      print(sec_list)
+
 
   print('Beneath threshold?:',await mpc.output(check_vals[mpc.pid]))
 
@@ -67,6 +103,8 @@ async def main():
   #start by being able to handle any number of devices given their thresholds
   #I think if you check if each is less than their threshold, making the threshold 1, for booleans and arbitrary otherwise
   #then we can abstract that comparison for each deivce
+  #have some splitting? argument followed by arguments of dependencies, and whether the state changes if that dependency is high or low
+  #but how would we account for dependencies that require MULTIPLE devices are in a certain state?
   # we can then put all these boolean values in a list and act accordingly, ANDing/ORing the necessary list components through mult/addition
 
   await mpc.shutdown()
