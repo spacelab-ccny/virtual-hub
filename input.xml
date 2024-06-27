@@ -1,0 +1,65 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<deviceList>
+    <device id="1">
+        <deviceName> Fan </deviceName>
+        <argument num="1">
+            <!--1 indicates on, 0 indicates off-->
+            <argVal>0</argVal>
+            <argType>Bool</argType>
+        </argument>
+        
+        <dependencies>
+            <depGroup id="1">
+                <device>Thermostat</device>
+                <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
+                <upperThreshold arg="1"> 80 </upperThreshold>
+                <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
+                <lowerThreshold arg="1"> 70 </lowerThreshold>
+
+                <device>Blinds</device>
+                <!--1 indicates closed 0 indicates open-->
+                <upperThreshold arg="2"> 0 </upperThreshold>
+                <!--indicates what value the state should change to if ALL conditions are met-->
+                <stateChange>1</stateChange>
+            </depGroup>
+
+            <depGroup id="2">
+                <device>Thermostat</device>
+                <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
+                <upperThreshold arg="1"> 50 </upperThreshold>
+                <!--indicates what value the state should change to if ALL conditions are met-->
+                <stateChange>0</stateChange>
+            </depGroup>
+
+        </dependencies>
+    </device>
+
+    <device id="2">
+        <deviceName> Blinds </deviceName>
+        <argument num="1">
+            <!--1 indicates closed 0 indicates open-->
+            <argVal>0</argVal>
+            <argType>Bool</argType>
+        </argument>
+        <dependencies>
+            <DepGroup id="1">
+
+                <device>Thermostat</device>
+                <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
+                <lowerThreshold arg="1"> 90 </lowerThreshold>
+                <!--indicates what value the state should change to if ALL conditions are met-->
+                <state_change>1</state_change>
+
+            </DepGroup>
+        </dependencies>
+    </device>
+
+    <device id="3">
+        <deviceName> Thermostat</deviceName>
+        <argument num="1">
+            <argVal>72</argVal>
+            <argType>Int</argType>
+        </argument>
+        <!--No Dependencies (i.e. no other device can cause the thermostat to change state)-->
+    </device>
+</deviceList>
