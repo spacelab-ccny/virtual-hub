@@ -24,7 +24,7 @@ soup = BeautifulSoup(data, "xml")
 num_devices= len(soup .find_all('device'))
 print(num_devices)
  
-# Using find() to extract attributes 
+# Using find() to extract attributes the function
 # of the first instance of the tag
 b_name = soup .find('device', {'id':'3'})
 val = b_name.find('argVal').text
@@ -38,5 +38,16 @@ gfg = soup.find(lambda tag: tag.name == "deviceName" and 'Fan' in tag.text)
  
 print(val)
 #print(gfg.parent)
+
+#writing the python file:
+f  = open('dummy.py', 'w')
+f.write("from mpyc.runtime import mpc\nimport sys\n\nasync def main():\n\tawait mpc.start()")
+
+
+
+
+#shutdown mpc and call main to end file
+f.write("\n\tawait mpc.shutdown()\nmpc.run(main())")
+f.close()
  
  
