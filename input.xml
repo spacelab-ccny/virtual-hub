@@ -7,16 +7,16 @@
             <argVal>0</argVal>
             <argType>Bool</argType>
         </argument>
-        
+
         <dependencies>
             <depGroup id="1">
-                <device>Thermostat</device>
+                <depDevice>Thermostat</depDevice>
                 <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
                 <upperThreshold arg="1"> 80 </upperThreshold>
                 <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
                 <lowerThreshold arg="1"> 70 </lowerThreshold>
 
-                <device>Blinds</device>
+                <depDevice>Blinds</depDevice>
                 <!--1 indicates closed 0 indicates open-->
                 <upperThreshold arg="2"> 0 </upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
@@ -24,7 +24,7 @@
             </depGroup>
 
             <depGroup id="2">
-                <device>Thermostat</device>
+                <depDevice>Thermostat</depDevice>
                 <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
                 <upperThreshold arg="1"> 50 </upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
@@ -44,7 +44,7 @@
         <dependencies>
             <DepGroup id="1">
 
-                <device>Thermostat</device>
+                <depDevice>Thermostat</depDevice>
                 <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
                 <lowerThreshold arg="1"> 90 </lowerThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
