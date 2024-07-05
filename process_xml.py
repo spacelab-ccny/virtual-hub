@@ -26,8 +26,9 @@ print(num_devices)
  
 # Using find() to extract attributes the function
 # of the first instance of the tag
-b_name = soup .find('device', {'id':'3'})
-val = b_name.find('argVal').text
+b_name = soup .find('device', {'id':'1'})
+val = b_name.find('deviceName').text
+print(val)
 
 
 b_name = soup.find('device', {'id':'3'})
@@ -41,8 +42,29 @@ print(val)
 
 #writing the python file:
 f  = open('dummy.py', 'w')
-f.write("from mpyc.runtime import mpc\nimport sys\n\nasync def main():\n\tawait mpc.start()")
+f.write("from mpyc.runtime import mpc\nimport sys\n\nasync def main():\n\tsecint = mpc.SecInt(16)\n\tawait mpc.start()")
+f.write("\n\tif mpc.parties != {}:\n\t\tprint(await mpc.output(\'Expected {} parties. Try again.\'))\n".format(num_devices, num_devices))
 
+count = 0
+name_list = []
+
+#looping through the devices and creating a variable in the output script for each argument
+for i in range(num_devices):
+    i = 1+i
+    b_name = soup.find('device', {'id':i})
+    name = b_name.find('deviceName').text
+    num_args = len(b_name.find_all('argument'))
+    for j in range(num_args):
+        count = count +1
+        f.write("\n\t{}{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else 0".format(name,j,count,count))
+        name_list = name_list + [name+str(j)]
+#print(name_list)
+f.write("\n")
+for i in range(len(name_list)):
+    f.write("\n\t{}_combined = sum(mpc.input({}, range(mpc.parties)))".format(name_list[i],name_list[i]))
+    
+
+    
 
 
 

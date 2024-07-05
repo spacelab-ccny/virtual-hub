@@ -1,7 +1,7 @@
 <?xml version = "1.0" encoding = "UTF-8" ?>
 <deviceList>
     <device id="1">
-        <deviceName> Fan </deviceName>
+        <deviceName>Fan</deviceName>
         <argument num="1">
             <!--1 indicates on, 0 indicates off-->
             <argVal>0</argVal>
@@ -20,7 +20,7 @@
                 <!--1 indicates closed 0 indicates open-->
                 <upperThreshold arg="2"> 0 </upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
-                <stateChange>1</stateChange>
+                <stateChange num="1">1</stateChange>
             </depGroup>
 
             <depGroup id="2">
@@ -28,14 +28,14 @@
                 <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
                 <upperThreshold arg="1"> 50 </upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
-                <stateChange>0</stateChange>
+                <stateChange num="1">0</stateChange>
             </depGroup>
 
         </dependencies>
     </device>
 
     <device id="2">
-        <deviceName> Blinds </deviceName>
+        <deviceName>Blinds</deviceName>
         <argument num="1">
             <!--1 indicates closed 0 indicates open-->
             <argVal>0</argVal>
@@ -48,14 +48,14 @@
                 <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
                 <lowerThreshold arg="1"> 90 </lowerThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
-                <state_change>1</state_change>
+                <state_change num="1">1</state_change>
 
             </DepGroup>
         </dependencies>
     </device>
 
     <device id="3">
-        <deviceName> Thermostat</deviceName>
+        <deviceName>Thermostat</deviceName>
         <argument num="1">
             <argVal>72</argVal>
             <argType>Int</argType>
