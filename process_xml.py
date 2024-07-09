@@ -113,6 +113,7 @@ for dev in range(len(name_list)):
                 f.write("\n")
                 f.write(f"\n\tin_range = ltruth and utruth")
                 f.write("\n")
+                
             print(f"upper {upper} lower {lower}")
             f.write("\n")
 #if its less than upperThreshold arg=i set "truth" variable to true
