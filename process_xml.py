@@ -43,7 +43,7 @@ print(val)
 #writing the python file:
 f  = open('dummy.py', 'w')
 f.write("from mpyc.runtime import mpc\nimport sys\n\nasync def main():\n\tsecint = mpc.SecInt(16)\n\tawait mpc.start()")
-f.write("\n\tif mpc.parties != {}:\n\t\tprint(await mpc.output(\'Expected {} parties. Try again.\'))\n".format(num_devices, num_devices))
+#f.write("\n\tif mpc.parties != {}:\n\t\tprint(\"Did not reach expected number of parties. Expected \", await mpc.output({}))\n".format(num_devices, num_devices))
 
 count = 0
 name_list = []
@@ -59,26 +59,32 @@ for i in range(num_devices):
     for j in range(num_args):
         j=j+1
         count = count +1
-        f.write("\n\t{}{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else 0".format(name,j,count,count))
+        f.write("\n\t{}{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else secint(0)".format(name,j,count,count))
         arg_list = arg_list + [name+str(j)]
 print(name_list)
 f.write("\n")
 for i in range(len(arg_list)):
-    f.write("\n\t{}_combined = sum(mpc.input({}, range(mpc.parties)))".format(arg_list[i],arg_list[i]))
+    f.write("\n\t{}_combined = sum(mpc.input({}, range({})))".format(arg_list[i],arg_list[i], num_devices))
     
 f.write("\n")
 #now we need to retrieve each of the conditions to change the state of each argument of each device:
 #first we retrieve the dependencies of the device
 for dev in range(len(name_list)):
+    f.write(f"\n\t#{name_list[dev]}")
     dev =dev+1
     device = soup.find('device', {'id':str(dev)})
     #print(device)
     dependencies = device.find_all('depGroup')
     num_dep = len(dependencies)
     print(num_dep)
+    #list storing the threshold truths to "OR"
+    or_list = []
+
 #then, while depGroup with id "i" exists:
     for dep in range(num_dep):
+        
         dep = dep+1
+        f.write(f"\n\t#Dependency {dep}")
 #Get vaule of variable with devicename.text+decvicenamenum
         dep_group = device.find('depGroup', {'id':str(dep)})
         state = dep_group.find('stateChange')['num']
@@ -89,21 +95,24 @@ for dev in range(len(name_list)):
         #print(dep_group)
         dep_devs=dep_group.find_all('depDevice')
         #print(dep_devs)
+
         for ddev in range(len(dep_devs)):
             cur_dep= dep_devs[ddev].text+dep_devs[ddev]['num']+'_combined'
             print(cur_dep)
             thresh =-1
             try:
                 upper = dep_group.find('upperThreshold',{'arg':ddev+1}).text
-                f.write("\n\tutruth = -1")
+                f.write(f"\n\tutruth{dep} = -1")
                 thresh =2
-                f.write(f"\n\tutruth =  {cur_dep} <  secint({upper})")
+                f.write(f"\n\tutruth{dep} =  {cur_dep} <  secint({upper})")
+                or_list = or_list +["utruth"+str(dep)]
             except:
                 upper = 'none'
             try:
                 lower = dep_group.find('lowerThreshold',{'arg':ddev+1}).text
-                f.write("\n\tltruth = -1")
-                f.write(f"\n\tltruth = {cur_dep} > secint({lower})")
+                f.write(f"\n\tltruth{dep} = -1")
+                f.write(f"\n\tltruth{dep} = {cur_dep} > secint({lower})")
+                or_list = or_list +["ltruth"+str(dep)]
                 if thresh ==-1:
                     thresh = 1
             except:
@@ -111,11 +120,40 @@ for dev in range(len(name_list)):
                 lower = 'none'
             if(thresh==2):
                 f.write("\n")
-                f.write(f"\n\tin_range = ltruth and utruth")
+                or_list = or_list[:-2]
+                f.write(f"\n\tin_range{dep} = ltruth{dep} * utruth{dep}")
+                or_list = or_list +["in_range"+str(dep)]
                 f.write("\n")
                 
             print(f"upper {upper} lower {lower}")
             f.write("\n")
+
+        dep_str =''
+        for truth_val in or_list[len(or_list)-len(dep_devs):]:
+            dep_str = dep_str + truth_val +' + '
+        dep_str = "("+dep_str[:-3]+")"
+        print(dep_str)
+        or_list = or_list[:-len(dep_devs)]
+        or_list = or_list + [dep_str]
+
+        f.write(f"\n\ttruth = {dep_str}")
+        for num in range(len(name_list)):
+            if(num+1==dev):
+                f.write(f"\n\tif mpc.pid == {dev-1}:")
+                f.write(f"\n\t\tprint('Condition {dep} met?:',await mpc.output(truth))")
+            else:
+                f.write(f"\n\tif mpc.pid == {num}:")
+                f.write(f"\n\t\tprint('Wait',await mpc.output(truth))")
+        
+
+    cond_str = ''
+    for truth_val in or_list:
+        cond_str = cond_str + truth_val +' + '
+    cond_str = cond_str[:-3]
+    print(cond_str)
+    #f.write(f"\n\ttruth = {cond_str}")
+    #f.write(f"\n\tif mpc.pid == {dev}:")
+    #f.write(f"\n\t\tprint('Conditions met?:',await mpc.output(temp_check))")
 #if its less than upperThreshold arg=i set "truth" variable to true
 
 #if lowerThreshold arg=i (check existence becuase it might not have both) keep previous variable at true
