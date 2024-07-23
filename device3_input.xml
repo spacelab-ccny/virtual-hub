@@ -12,24 +12,24 @@
                 <!--here num="1" indicates that we're looking at the 1st argument of Thermostat-->
                 <depDevice num="1">Thermostat</depDevice>
                 <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
-                <upperThreshold arg="1"> 0 </upperThreshold>
+                <upperThreshold arg="1">0</upperThreshold>
                 <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
-                <lowerThreshold arg="1"> 0 </lowerThreshold>
+                <lowerThreshold arg="1">0</lowerThreshold>
                 
                 <!--here num="1" indicates that we're looking at the 1st argument of Blinds-->
                 <depDevice num="1">Blinds</depDevice>
                 <!--1 indicates closed 0 indicates open-->
-                <upperThreshold arg="2"> 0 </upperThreshold>
+                <upperThreshold arg="2">0</upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
 
                 <!--here num=1 indicates we're looking at the 1st argument of this device, i.e. the Fan-->
-                <stateChange num="1">1</stateChange>
+                <stateChange num="1">0</stateChange>
             </depGroup>
 
             <depGroup id="2">
                 <depDevice num="1">Thermostat</depDevice>
                 <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
-                <upperThreshold arg="1"> 50 </upperThreshold>
+                <upperThreshold arg="1">0</upperThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
                 <stateChange num="1">0</stateChange>
             </depGroup>
@@ -49,9 +49,9 @@
 
                 <depDevice num="1">Thermostat</depDevice>
                 <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
-                <lowerThreshold arg="1"> 90 </lowerThreshold>
+                <lowerThreshold arg="1">0</lowerThreshold>
                 <!--indicates what value the state should change to if ALL conditions are met-->
-                <stateChange num="1">1</stateChange>
+                <stateChange num="1">0</stateChange>
 
             </depGroup>
         </dependencies>
