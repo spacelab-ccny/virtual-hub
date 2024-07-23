@@ -109,22 +109,24 @@ for dev in range(len(name_list)):
             thresh =-1
             try:
                 upper = dep_group.find('upperThreshold',{'arg':ddev+1}).text
-                f.write(f"\n\tupper{dep} = -1")
+                f.write(f"\n\tutruth{dep} = -1")
                 thresh =2
                 count = count +1
                 f.write("\n\tupper{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else secint(0)".format(dep, count, count))
                 f.write("\n\tupper{} = sum(mpc.input(upper{}, range({})))".format(dep, dep, num_devices))
-                or_list = or_list +["upper"+str(dep)]
+                f.write(f"\n\tutruth{dep} =  {cur_dep} <  upper{dep}")
+                or_list = or_list +["utruth"+str(dep)]
 
             except:
                 upper = 'none'
             try:
                 lower = dep_group.find('lowerThreshold',{'arg':ddev+1}).text
-                f.write(f"\n\tlower{dep} = -1")
+                f.write(f"\n\tltruth{dep} = -1")
                 count = count +1
                 f.write("\n\tlower{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else secint(0)".format(dep, count, count))
                 f.write("\n\tlower{} = sum(mpc.input(lower{}, range({})))".format(dep, dep, num_devices))
-                or_list = or_list +["lower"+str(dep)]
+                f.write(f"\n\tltruth{dep} = {cur_dep} > lower{dep}")
+                or_list = or_list +["ltruth"+str(dep)]
                 if thresh ==-1:
                     thresh = 1
             except:
@@ -133,7 +135,7 @@ for dev in range(len(name_list)):
             if(thresh==2):
                 f.write("\n")
                 or_list = or_list[:-2]
-                f.write(f"\n\tin_range{dep} = lower{dep} * upper{dep}")
+                f.write(f"\n\tin_range{dep} = ltruth{dep} * utruth{dep}")
                 or_list = or_list +["in_range"+str(dep)]
                 f.write("\n")
                 
