@@ -40,11 +40,13 @@ async def main():
   print(f"testing: {s}")
 
   count = mpc.pid
-  
+  check = 0
+  sec =0
   print(count)
   # cen get unsecure version of int in sec_list for all elements in list
   for i in range(party_num):
-    ss = await mpc.output(sec_list[i])
+    sec2 = sec_list[i]
+    ss = await mpc.output(sec2)
     print(f"testing: {ss}")
     if i == count:
       print(f"SECRET: {sec_list[i]}")
@@ -69,6 +71,7 @@ async def main():
   c = await mpc.output(check2) > await mpc.output(sec)
   print("beneath threshold? ", await mpc.output(check2) > await mpc.output(sec))
   print("beneath threshold? ", c)
+  print("sec", b)
   print("beneath threshold unsec? ", bool)
   print("beneath threshold bool2? ", await mpc.output(bool2))
   print("beneath threshold sec? ", await mpc.output(beneath_thresh))
