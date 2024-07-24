@@ -19,10 +19,11 @@ async def main():
 		f = mpc.input(secint(Fan1[0]),0)
 		b = mpc.input(secint(Blinds1[0]),1)
 		t = mpc.input(secint(Thermostat1[0]),2)
-
-
 		a = await mpc.output(f,0)
-		print(a)
+
+
+		if(mpc.pid == 0):
+			print(a)
 
 		
 		#await mpc.shutdown()
