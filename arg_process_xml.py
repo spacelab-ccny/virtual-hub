@@ -47,7 +47,7 @@ f.write("\n")
 for dev in range(len(name_list)):
     var_list = []
     comparison_list = []
-    state_changes =[]
+    #state_changes =[]
     f.write(f"\n\t#{name_list[dev]}")
     dev =dev+1
     device = soup.find('device', {'id':str(dev)})
@@ -68,7 +68,7 @@ for dev in range(len(name_list)):
 
 #then, while depGroup with id "i" exists:
     for dep in range(num_dep):
-        
+        #temp_state_list = []
         dep = dep+1
         f.write(f"\n\t#Dependency {dep}")
 #Get vaule of variable with devicename.text+decvicenamenum
@@ -79,6 +79,7 @@ for dev in range(len(name_list)):
         for ddev in range(len(dep_devs)):
             cur_dep= dep_devs[ddev].text+dep_devs[ddev]['num']
             print(cur_dep)
+            state_changes =[]
             thresh =-1
             try:
                 upper = dep_group.find('upperThreshold',{'arg':ddev+1}).text
@@ -116,6 +117,7 @@ for dev in range(len(name_list)):
                 or_list = or_list[:-2]
                 #f.write(f"\n\tin_range{dep} = ltruth{dep} * utruth{dep}")
                 comparison_list = comparison_list + [f"\n\t\tin_range{dep} = ltruth{dep} == utruth{dep}"]
+                comparison_list = comparison_list + [f"\n\t\tin_range{dep} = in_range{dep} == secint(1)"]
                 or_list = or_list +["in_range"+str(dep)]
                 #f.write("\n")
                 
@@ -124,27 +126,26 @@ for dev in range(len(name_list)):
 
         dep_str =''
         for truth_val in or_list[len(or_list)-len(dep_devs):]:
-            dep_str = dep_str + truth_val +' + '
+            dep_str = dep_str + truth_val +' * '
         dep_str = "("+dep_str[:-3]+")"
         print(dep_str)
         or_list = or_list[:-len(dep_devs)]
         or_list = or_list + [dep_str]
 
-        states = dep_group.find('stateChange')
-        #print(f"state {states}")
+        states = dep_group.findAll('stateChange')
+        print(f"state {states}")
         state_count = 0
        # f.write(f"\n\ttruth = {dep_str}")
         comparison_list = comparison_list + [f"\n\t\ttruth{dev}_{dep-1} = {dep_str}"]
         for state in states:
             count = count+1
-            f.write("\n\t{}_state{} = None".format(name_list[dev-1], dep))
-            var_list = var_list +[f"{name_list[dev-1]}_state{dep}"]
-            state_changes = state_changes + [f"{name_list[dev-1]}_state{dep}"]
-            #f.write("\n\t{}_state{}_{} = secint(int(sys.argv[{}])) if sys.argv[{}:] else secint(0)".format(name_list[dev-1], int(state)+1, dep, count, count))
-       #     f.write("\n\t{}_state{}_{} = sum(mpc.input({}_state{}_{}, range({})))".format(name_list[dev-1], int(state)+1, dep, name_list[dev-1], int(state)+1, dep, num_devices))
-       #     f.write("\n\t{}_state{}_{}_change = truth * {}_state{}_{}".format(name_list[dev-1], int(state)+1, dep, name_list[dev-1], int(state)+1, dep))
-       #     f.write(f"\n\tif mpc.pid == {dev-1}:")
-       #     f.write("\n\t\tprint('{}_state{}_{}:',await mpc.output({}_state{}_{}_change))".format(name_list[dev-1], int(state)+1, dep, name_list[dev-1], int(state)+1, dep))
+            state = state['num']
+            f.write("\n\t{}_state{}_{} = None".format(name_list[dev-1], dep,state))
+            var_list = var_list +[f"{name_list[dev-1]}_state{dep}_{state}"]
+            state_changes = state_changes + [f"{name_list[dev-1]}_state{dep}_{state}"]
+
+        all_state_changes = all_state_changes +[state_changes]
+        #print(f"temp:\n {temp_state_list}")
         
 
     cond_str = ''
@@ -154,7 +155,7 @@ for dev in range(len(name_list)):
     print(cond_str)
 
     complete_var_list = complete_var_list +[var_list]
-    all_state_changes = all_state_changes + [state_changes]
+    #all_state_changes = all_state_changes + [temp_state_list]
     all_comp = all_comp+[comparison_list]
 
 
@@ -176,18 +177,27 @@ for dev in range(len(name_list)):
         counter = counter +1
 
 f.write("\n")
+print("ALL state changes:")
+print(f"{all_state_changes}")
+print(f"COMP:\n{all_comp}")
+dep =0
 for i in range(len(all_comp)):
-    count = 0
+    counting=0
     for comp in all_comp[i]:
+        count = 0
         f.write(f"{comp}")
         if(comp[:8]== f"\n\t\ttruth"):
-            #f.write(f"\n\t\tout = await mpc.output(mpc.if_else(truth,{all_state_changes[i][count]} , None), {i})\n")
-            f.write(f"\n\t\tout{i+1}_{count} = await mpc.output(truth{i+1}_{count}, {i})\n")
-            f.write(f"\n\t\tif mpc.pid == {i}:")
-            f.write(f"\n\t\t\tprint(f\"{all_state_changes[i][count]}: {{out{i+1}_{count}}}\")\n\n")
-            count = count+1
+            print(f"TRUE:\n{comp}")
+            for state in all_state_changes[dep]:
+                #f.write(f"\n\t\tout = await mpc.output(mpc.if_else(truth,{all_state_changes[i][count]} , None), {i})\n")
+                f.write(f"\n\n\t\tout{i+1}_{dep}_{count} = await mpc.output(truth{i+1}_{counting}*{state}, {i})")
+                f.write(f"\n\t\tif mpc.pid == {i}:")
+                f.write(f"\n\t\t\tprint(f\"{all_state_changes[dep][count]}: {{out{i+1}_{dep}_{count}}}\")\n")
+                count = count+1
+            counting = counting+1
+            dep = dep+1
 
-print(complete_var_list)
+#print(complete_var_list)
 #shutdown mpc and call main to end file
 f.write("\nmpc.run(main())")
 f.close()
