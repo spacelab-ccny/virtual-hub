@@ -1,3 +1,3 @@
 #!/bin/bash
 args=("$@")
-python3 arg_comp.py -M3 -I${args[0]} 0 0 0 100 80 0 50 0 0
+python3 arg_comp.py -M3 -I${args[0]} 1 11 2 2 3 4 44 5 6 >> device1_input.txt

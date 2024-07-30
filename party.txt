@@ -1,0 +1,120 @@
+2024-07-28 23:27:30,651 Start MPyC runtime v0.10
+2024-07-28 23:27:30,759 Start MPyC runtime v0.10
+2024-07-28 23:27:30,865 Start MPyC runtime v0.10
+2024-07-28 23:27:30,957 All 3 parties connected.
+2024-07-28 23:27:30,964 All 3 parties connected.
+2024-07-28 23:27:30,964 All 3 parties connected.
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-28 23:27:30,987 Stop MPyC -- elapsed time: 0:00:00.029|bytes sent: 4920
+2024-07-28 23:27:30,987 Stop MPyC -- elapsed time: 0:00:00.022|bytes sent: 4722
+Blinds_state1_1: 25
+2024-07-28 23:27:30,987 Stop MPyC -- elapsed time: 0:00:00.022|bytes sent: 4758
+2024-07-28 23:27:33,003 Start MPyC runtime v0.10
+2024-07-28 23:27:33,129 Start MPyC runtime v0.10
+2024-07-28 23:27:33,242 Start MPyC runtime v0.10
+2024-07-28 23:27:33,308 All 3 parties connected.
+2024-07-28 23:27:33,336 All 3 parties connected.
+2024-07-28 23:27:33,337 All 3 parties connected.
+2024-07-28 23:27:33,357 Stop MPyC -- elapsed time: 0:00:00.020|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-28 23:27:33,357 Stop MPyC -- elapsed time: 0:00:00.049|bytes sent: 4920
+Blinds_state1_1: 25
+2024-07-28 23:27:33,357 Stop MPyC -- elapsed time: 0:00:00.020|bytes sent: 4758
+2024-07-29 09:45:11,178 Start MPyC runtime v0.10
+2024-07-29 09:45:11,303 Start MPyC runtime v0.10
+2024-07-29 09:45:11,418 Start MPyC runtime v0.10
+2024-07-29 09:45:11,483 All 3 parties connected.
+2024-07-29 09:45:11,509 All 3 parties connected.
+2024-07-29 09:45:11,509 All 3 parties connected.
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:11,527 Stop MPyC -- elapsed time: 0:00:00.044|bytes sent: 4920
+2024-07-29 09:45:11,527 Stop MPyC -- elapsed time: 0:00:00.017|bytes sent: 4722
+Blinds_state1_1: 25
+2024-07-29 09:45:11,527 Stop MPyC -- elapsed time: 0:00:00.017|bytes sent: 4758
+2024-07-29 09:45:13,543 Start MPyC runtime v0.10
+2024-07-29 09:45:13,654 Start MPyC runtime v0.10
+2024-07-29 09:45:13,791 Start MPyC runtime v0.10
+2024-07-29 09:45:13,849 All 3 parties connected.
+2024-07-29 09:45:13,860 All 3 parties connected.
+2024-07-29 09:45:13,860 All 3 parties connected.
+Blinds_state1_1: 25
+2024-07-29 09:45:13,876 Stop MPyC -- elapsed time: 0:00:00.016|bytes sent: 4758
+2024-07-29 09:45:13,876 Stop MPyC -- elapsed time: 0:00:00.015|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:13,876 Stop MPyC -- elapsed time: 0:00:00.026|bytes sent: 4920
+2024-07-29 09:45:40,444 Start MPyC runtime v0.10
+2024-07-29 09:45:40,564 Start MPyC runtime v0.10
+2024-07-29 09:45:40,680 Start MPyC runtime v0.10
+2024-07-29 09:45:40,749 All 3 parties connected.
+2024-07-29 09:45:40,770 All 3 parties connected.
+2024-07-29 09:45:40,770 All 3 parties connected.
+2024-07-29 09:45:40,789 Stop MPyC -- elapsed time: 0:00:00.019|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:40,789 Stop MPyC -- elapsed time: 0:00:00.040|bytes sent: 4920
+Blinds_state1_1: 25
+2024-07-29 09:45:40,789 Stop MPyC -- elapsed time: 0:00:00.019|bytes sent: 4758
+2024-07-29 09:45:42,842 Start MPyC runtime v0.10
+2024-07-29 09:45:42,969 Start MPyC runtime v0.10
+2024-07-29 09:45:43,089 Start MPyC runtime v0.10
+2024-07-29 09:45:43,146 All 3 parties connected.
+2024-07-29 09:45:43,175 All 3 parties connected.
+2024-07-29 09:45:43,175 All 3 parties connected.
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:43,194 Stop MPyC -- elapsed time: 0:00:00.047|bytes sent: 4920
+2024-07-29 09:45:43,194 Stop MPyC -- elapsed time: 0:00:00.018|bytes sent: 4722
+Blinds_state1_1: 25
+2024-07-29 09:45:43,194 Stop MPyC -- elapsed time: 0:00:00.018|bytes sent: 4758
+2024-07-29 09:45:56,795 Start MPyC runtime v0.10
+2024-07-29 09:45:56,911 Start MPyC runtime v0.10
+2024-07-29 09:45:57,013 Start MPyC runtime v0.10
+2024-07-29 09:45:57,101 All 3 parties connected.
+2024-07-29 09:45:57,115 All 3 parties connected.
+2024-07-29 09:45:57,116 All 3 parties connected.
+2024-07-29 09:45:57,134 Stop MPyC -- elapsed time: 0:00:00.018|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:57,134 Stop MPyC -- elapsed time: 0:00:00.032|bytes sent: 4920
+Blinds_state1_1: 25
+2024-07-29 09:45:57,134 Stop MPyC -- elapsed time: 0:00:00.018|bytes sent: 4758
+2024-07-29 09:45:59,150 Start MPyC runtime v0.10
+2024-07-29 09:45:59,267 Start MPyC runtime v0.10
+2024-07-29 09:45:59,395 Start MPyC runtime v0.10
+2024-07-29 09:45:59,455 All 3 parties connected.
+2024-07-29 09:45:59,472 All 3 parties connected.
+2024-07-29 09:45:59,472 All 3 parties connected.
+Blinds_state1_1: 25
+2024-07-29 09:45:59,489 Stop MPyC -- elapsed time: 0:00:00.016|bytes sent: 4758
+2024-07-29 09:45:59,490 Stop MPyC -- elapsed time: 0:00:00.016|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:45:59,490 Stop MPyC -- elapsed time: 0:00:00.034|bytes sent: 4920
+2024-07-29 09:46:22,736 Start MPyC runtime v0.10
+2024-07-29 09:46:22,827 Start MPyC runtime v0.10
+2024-07-29 09:46:22,963 Start MPyC runtime v0.10
+2024-07-29 09:46:23,032 All 3 parties connected.
+2024-07-29 09:46:23,042 All 3 parties connected.
+2024-07-29 09:46:23,042 All 3 parties connected.
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:46:23,057 Stop MPyC -- elapsed time: 0:00:00.014|bytes sent: 4920
+2024-07-29 09:46:23,057 Stop MPyC -- elapsed time: 0:00:00.013|bytes sent: 4722
+Blinds_state1_1: 25
+2024-07-29 09:46:23,057 Stop MPyC -- elapsed time: 0:00:00.024|bytes sent: 4758
+2024-07-29 09:46:25,069 Start MPyC runtime v0.10
+2024-07-29 09:46:25,203 Start MPyC runtime v0.10
+2024-07-29 09:46:25,308 Start MPyC runtime v0.10
+2024-07-29 09:46:25,374 All 3 parties connected.
+2024-07-29 09:46:25,408 All 3 parties connected.
+2024-07-29 09:46:25,409 All 3 parties connected.
+2024-07-29 09:46:25,431 Stop MPyC -- elapsed time: 0:00:00.021|bytes sent: 4722
+Fan_state1_1: 1
+Fan_state2_1: 1
+2024-07-29 09:46:25,431 Stop MPyC -- elapsed time: 0:00:00.055|bytes sent: 4920
+Blinds_state1_1: 25
+2024-07-29 09:46:25,431 Stop MPyC -- elapsed time: 0:00:00.021|bytes sent: 4758

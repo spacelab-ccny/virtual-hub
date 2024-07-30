@@ -1,0 +1,6 @@
+2024-07-29 17:16:33,228 Start MPyC runtime v0.10
+2024-07-29 17:16:33,434 All 3 parties connected.
+output Fan_state1_1 1
+output Fan_state1_2 11
+output Fan_state2_1 1
+2024-07-29 17:16:33,458 Stop MPyC -- elapsed time: 0:00:00.023|bytes sent: 4812

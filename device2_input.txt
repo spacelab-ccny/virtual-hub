@@ -1,0 +1,56 @@
+2024-07-29 10:18:52,634 Start MPyC runtime v0.10
+2024-07-29 10:18:52,738 All 3 parties connected.
+Blinds_state1_1: 25
+2024-07-29 10:18:52,812 Stop MPyC -- elapsed time: 0:00:00.073|bytes sent: 4758
+2024-07-29 10:18:54,984 Start MPyC runtime v0.10
+2024-07-29 10:18:55,189 All 3 parties connected.
+Blinds_state1_1: 25
+2024-07-29 10:18:55,213 Stop MPyC -- elapsed time: 0:00:00.023|bytes sent: 4758
+2024-07-29 13:37:21,703 Start MPyC runtime v0.10
+2024-07-29 13:37:21,910 All 3 parties connected.
+output Blinds_state1_1: 9
+2024-07-29 13:37:21,933 Stop MPyC -- elapsed time: 0:00:00.022|bytes sent: 4578
+2024-07-29 14:23:00,433 Start MPyC runtime v0.10
+2024-07-29 14:23:00,537 All 3 parties connected.
+output Blinds_state1_1: 9
+2024-07-29 14:23:00,560 Stop MPyC -- elapsed time: 0:00:00.022|bytes sent: 4578
+2024-07-29 14:23:51,384 Start MPyC runtime v0.10
+2024-07-29 14:25:04,365 Start MPyC runtime v0.10
+2024-07-29 14:32:00,486 Start MPyC runtime v0.10
+2024-07-29 14:32:59,997 Start MPyC runtime v0.10
+2024-07-29 14:34:40,146 Start MPyC runtime v0.10
+2024-07-29 14:36:22,561 Start MPyC runtime v0.10
+2024-07-29 14:38:07,539 Start MPyC runtime v0.10
+2024-07-29 14:48:29,916 Start MPyC runtime v0.10
+2024-07-29 14:49:05,419 Start MPyC runtime v0.10
+2024-07-29 14:49:05,620 Exception in callback MessageExchanger.connection_made(<_SelectorSoc...e, bufsize=0>>)
+handle: <Handle MessageExchanger.connection_made(<_SelectorSoc...e, bufsize=0>>)>
+Traceback (most recent call last):
+  File "/home/ania/anaconda3/lib/python3.11/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/ania/anaconda3/lib/python3.11/site-packages/mpyc/asyncoro.py", line 52, in connection_made
+    rt.set_protocol(self.peer_pid, self)
+  File "/home/ania/anaconda3/lib/python3.11/site-packages/mpyc/runtime.py", line 4176, in set_protocol
+    self.parties[self.pid].protocol.set_result(None)
+asyncio.exceptions.InvalidStateError: invalid state
+2024-07-29 14:49:05,621 All 3 parties connected.
+2024-07-29 14:49:05,623 Exception in callback _SelectorSocketTransport._call_connection_lost(None)
+handle: <Handle _SelectorSocketTransport._call_connection_lost(None)>
+Traceback (most recent call last):
+  File "/home/ania/anaconda3/lib/python3.11/asyncio/events.py", line 80, in _run
+    self._context.run(self._callback, *self._args)
+  File "/home/ania/anaconda3/lib/python3.11/asyncio/selector_events.py", line 1117, in _call_connection_lost
+    super()._call_connection_lost(exc)
+  File "/home/ania/anaconda3/lib/python3.11/asyncio/selector_events.py", line 896, in _call_connection_lost
+    self._protocol.connection_lost(exc)
+  File "/home/ania/anaconda3/lib/python3.11/site-packages/mpyc/asyncoro.py", line 125, in connection_lost
+    self.runtime.unset_protocol(self.peer_pid)
+  File "/home/ania/anaconda3/lib/python3.11/site-packages/mpyc/runtime.py", line 4181, in unset_protocol
+    self.parties[self.pid].protocol.set_result(None)
+asyncio.exceptions.InvalidStateError: invalid state
+2024-07-29 14:49:47,355 Start MPyC runtime v0.10
+2024-07-29 14:49:47,561 All 3 parties connected.
+2024-07-29 17:16:33,228 Start MPyC runtime v0.10
+2024-07-29 17:16:33,434 All 3 parties connected.
+output Blinds_state1_1 9
+2024-07-29 17:16:33,458 Stop MPyC -- elapsed time: 0:00:00.023|bytes sent: 4578

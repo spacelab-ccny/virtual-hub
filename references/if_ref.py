@@ -19,12 +19,21 @@ async def main():
 		f = mpc.input(secint(Fan1[0]),0)
 		b = mpc.input(secint(Blinds1[0]),1)
 		t = mpc.input(secint(Thermostat1[0]),2)
-		a = await mpc.output(f,0)
 
+		ff = f<b
+		if ff is None:
+			print("NONE")
+		g=mpc.if_else(ff, f, b)
+		a = await mpc.output(g,1)
+		aa= await mpc.output(b,1)
+		aaa = await mpc.output(t,2)
 
 		if(mpc.pid == 0):
 			print(a)
-
+		if(mpc.pid == 1):
+			print(aa)
+		if(mpc.pid == 2):
+			print(aaa)	
 		
 		#await mpc.shutdown()
 mpc.run(main())

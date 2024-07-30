@@ -4,68 +4,90 @@ import sys
 
 async def main():
 	secint = mpc.SecInt(16)
-	await mpc.start()
-	Fan1 = secint(int(sys.argv[1])) if sys.argv[1:] else secint(0)
-	Blinds1 = secint(int(sys.argv[2])) if sys.argv[2:] else secint(0)
-	Thermostat1 = secint(int(sys.argv[3])) if sys.argv[3:] else secint(0)
-
-	Fan1_combined = sum(mpc.input(Fan1, range(3)))
-	Blinds1_combined = sum(mpc.input(Blinds1, range(3)))
-	Thermostat1_combined = sum(mpc.input(Thermostat1, range(3)))
 
 	#Fan
+	Fan1 = None
+	Fan2 = None
 	#Dependency 1
-	utruth1 = -1
-	upper1 = secint(int(sys.argv[4])) if sys.argv[4:] else secint(0)
-	upper1 = sum(mpc.input(upper1, range(3)))
-	utruth1 =  Thermostat1_combined <  upper1
-	ltruth1 = -1
-	lower1 = secint(int(sys.argv[5])) if sys.argv[5:] else secint(0)
-	lower1 = sum(mpc.input(lower1, range(3)))
-	ltruth1 = Thermostat1_combined > lower1
+	Fan_upper1_0 = None
+	Fan_lower1_0 = None
 
-	in_range1 = ltruth1 * utruth1
+	Fan_upper1_1 = None
 
-
-	utruth1 = -1
-	upper1 = secint(int(sys.argv[6])) if sys.argv[6:] else secint(0)
-	upper1 = sum(mpc.input(upper1, range(3)))
-	utruth1 =  Blinds1_combined <  upper1
-
-	truth = (in_range1 + utruth1)
-	if mpc.pid == 0:
-		print('Condition 1 met?:',await mpc.output(truth))
-	if mpc.pid == 1:
-		print('Wait',await mpc.output(truth))
-	if mpc.pid == 2:
-		print('Wait',await mpc.output(truth))
+	Fan_state1_1 = None
+	Fan_state1_2 = None
 	#Dependency 2
-	utruth2 = -1
-	upper2 = secint(int(sys.argv[7])) if sys.argv[7:] else secint(0)
-	upper2 = sum(mpc.input(upper2, range(3)))
-	utruth2 =  Thermostat1_combined <  upper2
+	Fan_upper2_0 = None
 
-	truth = (utruth2)
-	if mpc.pid == 0:
-		print('Condition 2 met?:',await mpc.output(truth))
-	if mpc.pid == 1:
-		print('Wait',await mpc.output(truth))
-	if mpc.pid == 2:
-		print('Wait',await mpc.output(truth))
+	Fan_state2_1 = None
 	#Blinds
+	Blinds1 = None
 	#Dependency 1
-	ltruth1 = -1
-	lower1 = secint(int(sys.argv[8])) if sys.argv[8:] else secint(0)
-	lower1 = sum(mpc.input(lower1, range(3)))
-	ltruth1 = Thermostat1_combined > lower1
+	Blinds_lower1_0 = None
 
-	truth = (ltruth1)
-	if mpc.pid == 0:
-		print('Wait',await mpc.output(truth))
-	if mpc.pid == 1:
-		print('Condition 1 met?:',await mpc.output(truth))
-	if mpc.pid == 2:
-		print('Wait',await mpc.output(truth))
+	Blinds_state1_1 = None
 	#Thermostat
-	await mpc.shutdown()
+	Thermostat1 = None
+	if mpc.pid == 0:
+		Fan1 = int(sys.argv[1])
+		Fan2 = int(sys.argv[2])
+		Fan_upper1_0 = int(sys.argv[3])
+		Fan_lower1_0 = int(sys.argv[4])
+		Fan_upper1_1 = int(sys.argv[5])
+		Fan_state1_1 = int(sys.argv[6])
+		Fan_state1_2 = int(sys.argv[7])
+		Fan_upper2_0 = int(sys.argv[8])
+		Fan_state2_1 = int(sys.argv[9])
+	elif mpc.pid == 1:
+		Blinds1 = int(sys.argv[1])
+		Blinds_lower1_0 = int(sys.argv[2])
+		Blinds_state1_1 = int(sys.argv[3])
+	elif mpc.pid == 2:
+		Thermostat1 = int(sys.argv[1])
+
+	async with mpc:
+		Fan1 = mpc.input(secint(Fan1), 0)
+		Fan2 = mpc.input(secint(Fan2), 0)
+		Fan_upper1_0 = mpc.input(secint(Fan_upper1_0), 0)
+		Fan_lower1_0 = mpc.input(secint(Fan_lower1_0), 0)
+		Fan_upper1_1 = mpc.input(secint(Fan_upper1_1), 0)
+		Fan_state1_1 = mpc.input(secint(Fan_state1_1), 0)
+		Fan_state1_2 = mpc.input(secint(Fan_state1_2), 0)
+		Fan_upper2_0 = mpc.input(secint(Fan_upper2_0), 0)
+		Fan_state2_1 = mpc.input(secint(Fan_state2_1), 0)
+		Blinds1 = mpc.input(secint(Blinds1), 1)
+		Blinds_lower1_0 = mpc.input(secint(Blinds_lower1_0), 1)
+		Blinds_state1_1 = mpc.input(secint(Blinds_state1_1), 1)
+		Thermostat1 = mpc.input(secint(Thermostat1), 2)
+
+		utruth1 =  Thermostat1 <Fan_upper1_0
+		ltruth1 =  Thermostat1 > Fan_lower1_0
+		in_range1 = ltruth1 == utruth1
+		in_range1 = in_range1 == secint(1)
+		utruth1 =  Blinds1 <Fan_upper1_1
+		truth1_0 = (in_range1 * utruth1)
+
+		out1_0_0 = await mpc.output(mpc.if_else(truth1_0, Fan_state1_1, Fan1 ), 0)
+		if mpc.pid == 0:
+			print(f"output Fan_state1_1 {out1_0_0}")
+
+
+		out1_0_1 = await mpc.output(mpc.if_else(truth1_0, Fan_state1_2, Fan2 ), 0)
+		if mpc.pid == 0:
+			print(f"output Fan_state1_2 {out1_0_1}")
+
+		utruth2 =  Thermostat1 <Fan_upper2_0
+		truth1_1 = (utruth2)
+
+		out1_1_0 = await mpc.output(mpc.if_else(truth1_1, Fan_state2_1, Fan1 ), 0)
+		if mpc.pid == 0:
+			print(f"output Fan_state2_1 {out1_1_0}")
+
+		ltruth1 =  Thermostat1 > Blinds_lower1_0
+		truth2_0 = (ltruth1)
+
+		out2_2_0 = await mpc.output(mpc.if_else(truth2_0, Blinds_state1_1, Blinds1 ), 1)
+		if mpc.pid == 1:
+			print(f"output Blinds_state1_1 {out2_2_0}")
+
 mpc.run(main())
