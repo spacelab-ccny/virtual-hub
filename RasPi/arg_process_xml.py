@@ -21,7 +21,7 @@ print(num_devices)
 #writing the python file:
 f  = open('arg_comp.py', 'w')
 f.write("#!/bin/python3")
-f.write("\nfrom mpyc.runtime import mpc\nimport sys\n\nasync def main():\n\tsecint = mpc.SecInt(16)")
+f.write("\nfrom mpyc.runtime import mpc\nimport time\nimport sys\n\nasync def main():\n\tsecint = mpc.SecInt(16)")
 #f.write("\n\tif mpc.parties != {}:\n\t\tprint(\"Did not reach expected number of parties. Expected \", await mpc.output({}))\n".format(num_devices, num_devices))
 
 count = 0
@@ -169,7 +169,7 @@ for dev in range(len(name_list)):
         f.write(f"\n\t\t{var} = int(sys.argv[{counter}])")
         counter = counter +1
 
-f.write("\n\n\tasync with mpc:")
+f.write("\n\n\tstart=0\n\tasync with mpc:\n\t\tstart=time.time()")
 for dev in range(len(name_list)):
     counter =0
     for var in complete_var_list[dev]:
@@ -202,7 +202,10 @@ for i in range(len(all_comp)):
 
 #print(complete_var_list)
 #shutdown mpc and call main to end file
+f.write("\n\t\tend=time.time()")
+f.write("\n\t\ttotal=end-start")
+f.write("\n\t\tprint(f\"TIME: {total}\")")
 f.write("\nmpc.run(main())")
-f.close()
+
  
  
