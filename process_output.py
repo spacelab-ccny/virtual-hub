@@ -23,7 +23,8 @@ def rand_update(device, out):
 
     update = []
     for entry in val_list:
-        get_prob =random.random()
+        get_prob =random.uniform(0,1)
+        print
         if get_prob <0.333:
             print("ALTERED")
             if entry[1] == 'Bool':
@@ -31,14 +32,14 @@ def rand_update(device, out):
                 entry[0] = int(not int(entry[0]))
                 print(f"from {not entry[0]} to {(entry[0])}")
             elif entry[1]== 'Int':
-                if get_prob < 1.65:
+                if get_prob < 0.165:
                     original = entry[0]
-                    entry[0] = entry[0] +5
+                    entry[0] = int(entry[0]) +5
                     print(f"from {original} to {(entry[0])}")
 
                 else:
                     original = entry[0]
-                    entry[0] = entry[0] -5
+                    entry[0] = int(entry[0]) -5
                     print(f"from {original} to {(entry[0])}")
         update = update +[entry[0]]
 
