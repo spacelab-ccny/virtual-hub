@@ -83,6 +83,13 @@ def generate_command (input_file, num, pid_list):
             temp_arr = temp_arr + [state.text]
 
     print(temp_arr)
+    f.write(f" >> {input_file[:-9]}out.txt")
+    f.write(f"\ncp {input_file}  {input_file[:-9]}output.xml")
+    f.write(f"\npython3 process_output.py -i {input_file[:-9]}out.txt -n {num} -f {input_file[:-9]}output.xml")
+    f.write(f"\ncat  {input_file[:-9]}out.txt | grep 'TIME' | awk '{{print$2}}' >> {input_file[:-9]}time.txt")
+    f.write(f"\ncat  {input_file[:-9]}out.txt | grep 'bytes sent' | awk '{{print$10}}' >> {input_file[:-9]}bytes.txt")
+    f.write(f"\nrm {input_file[:-9]}out.txt")
+    f.write(f"\ncp {input_file[:-9]}output.xml {input_file}" ) 
     #f.write(f" >> {input_file[:-4]}.txt")
     f.close()
  
