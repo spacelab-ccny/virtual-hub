@@ -5,6 +5,6 @@ If you want to run the computation between devices that require some sort of net
 
 3. On each device separately, run "python3 arg_process_xml.py". It'll automatically read from input.xml and generate the script needed for our mpc computation.
 
-4. On each device separately, run "bash run_mpc.sh $DEVICE_NUM $PID_LIST". The $DEVICE_NUM argument should be the number you assigned to the deivce (1,2,3,..etc) and the $PID_LIST argument should be a comma separated list (no spaces) of the pids of each of the other devices in the MPC. Note, don't include the PID of the deivce you run this on in this list.
+4. On each device separately, run "bash run_mpc.sh $DEVICE_NUM $IP_ADDR_LIST". The $DEVICE_NUM argument should be the number you assigned to the deivce (1,2,3,..etc) and the $IP_ADDR_LIST" argument should be a comma separated list (no spaces) of the ip_addresses of each of the other devices in the MPC. Note, don't include the IP Address of the deivce you run this on in this list.
 
 5. If done properly, after the last device runs the above command the MPC computation should take place.
