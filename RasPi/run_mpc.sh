@@ -11,7 +11,7 @@ touch device${args[0]}_rss.txt
 touch device${args[0]}_vms.txt
 touch device${args[0]}_uss.txt
 
-for i in $(seq 1 10);
+for i in $(seq 1 50);
 do
     python3 generate_command.py -i device${args[0]}_input.xml -n ${num} -p "${pid_list}"
     bash device${args[0]}_command.sh ${num}
