@@ -26,7 +26,7 @@ def generate_command (input_file, num):
     temp_arr = []
 
     #looping through the devices and creating a variable in the output script for each argument
-    f.write(f"python3 arg_comp.py -M{num_devices} -I${{args[0]}}")
+    f.write(f"/usr/bin/time -f \"runtime %E \\n\\nRSS MEM: %M\" python3 arg_comp.py -M{num_devices} -I${{args[0]}}")
 
     args =(device.find_all('argument'))
     print(args)
@@ -83,7 +83,15 @@ def generate_command (input_file, num):
             temp_arr = temp_arr + [state.text]
 
     print(temp_arr)
-    f.write(f" >> {input_file[:-4]}.txt")
+    #f.write(f">> {input_file[:-9]}out.txt 2>{input_file[:-9]}.txt")
+    #f.write(f"\ncat  {input_file[:-9]}.txt | grep 'runtime' | awk '{{print$2}}' >> outputs/{input_file[:-9]}time2.txt")
+    #f.write(f"\ncat  {input_file[:-9]}.txt | grep 'mem' | awk '{{print$2}}' >> outputs/{input_file[:-9]}mem.txt")
+    f.write(f"\ncp {input_file}  {input_file[:-9]}output.xml")
+    f.write(f"\npython3 process_output.py -i {input_file[:-9]}out.txt -n {num} -f {input_file[:-9]}output.xml")
+    f.write(f"\ncat  {input_file[:-9]}out.txt | grep 'TIME' | awk '{{print$2}}' >> outputs/{input_file[:-9]}time.txt")
+    f.write(f"\ncat  {input_file[:-9]}out.txt | grep 'bytes sent' | awk '{{print$10}}' >> outputs/{input_file[:-9]}bytes.txt")
+    #f.write(f"\nrm {input_file[:-9]}out.txt" {input_file[:-9]}.txt)
+    f.write(f"\ncp {input_file[:-9]}output.xml {input_file}" ) 
     f.close()
  
 if __name__ == "__main__":
