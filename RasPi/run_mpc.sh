@@ -5,10 +5,11 @@ num=$[${args[0]} - 1 ]
 pid_list=`python3 pid_command.py -n ${num} -p ${args[1]}`
 echo $pid_list
 
-touch device1_time.txt
-touch device1_bytes.txt
-touch device2_time.txt
-touch device2_bytes.txt
+touch device${args[0]}_time.txt
+touch device${args[0]}_bytes.txt
+touch device${args[0]}_rss.txt
+touch device${args[0]}_vms.txt
+touch device${args[0]}_uss.txt
 
 for i in $(seq 1 10);
 do

@@ -170,8 +170,9 @@ for dev in range(len(name_list)):
         counter = counter +1
 
 f.write("\n\n\tstart=0\n\tasync with mpc:\n\t\tstart=time.time()")
-f.write("\n\t\tmem = psutil.virtual_memory()\n\t\tprint(f\"Virtual Memory: {mem}\\n\")\n")
-f.write("\n\t\tpid = os.getpid()\n\t\tprocess = psutil.Process(pid)\n\t\tmem2 = process.memory_info()\n\t\tprint(f\"Memory used: {mem2}\\n\")\n")
+#f.write("\n\t\tmem = psutil.virtual_memory()\n\t\tprint(f\"Virtual Memory: {mem}\\n\")\n")
+f.write("\n\t\tpid = os.getpid()\n\t\tprocess = psutil.Process(pid)\n\t\tmem2 = process.memory_full_info()\n\t\tprint(f\"RSS: {mem2[0]}\\nVMS: {mem2[1]}\\nUSS: {mem2[7]}\\n\")\n")
+#f.write("\n\t\tcpu = process.cpu_times()\n\t\tprint(f\"CPU-time: {cpu}\\n\")\n\t\t")
 for dev in range(len(name_list)):
     counter =0
     for var in complete_var_list[dev]:
@@ -208,6 +209,8 @@ f.write("\n\t\tend=time.time()")
 f.write("\n\t\ttotal=end-start")
 f.write("\n\t\tprint(f\"TIME: {total}\")")
 f.write("\nmpc.run(main())")
+
+
 
  
  
