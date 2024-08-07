@@ -67,7 +67,7 @@
     <device id="3">
         <deviceName>Thermostat</deviceName>
         <argument num="1">
-            <argVal>85</argVal>
+            <argVal>90</argVal>
             <argType>Int</argType>
         </argument>
         <!--No Dependencies (i.e. no other device can cause the thermostat to change state)-->

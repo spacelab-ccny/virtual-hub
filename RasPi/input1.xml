@@ -1,0 +1,42 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<deviceList>
+    <device id="1">
+        <deviceName>Fan</deviceName>
+        <argument num="1">
+            <argVal>1</argVal>
+            <argType>Bool</argType>
+        </argument>
+
+        <dependencies>
+            <depGroup id="1">
+                <!--here num="1" indicates that we're looking at the 1st argument of Thermostat-->
+                <depDevice num="1">Thermostat</depDevice>
+                <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
+                <upperThreshold arg="1">30</upperThreshold>
+                <!--lowerThreshold signifies that for the condition to hold, the value of the arg must be strictly greater than that value-->
+                <lowerThreshold arg="1">77</lowerThreshold>
+                <stateChange num="1">0</stateChange>
+            </depGroup>
+
+            <depGroup id="2">
+                <depDevice num="1">Thermostat</depDevice>
+                <!--upperThreshold signifies that for the condition to hold, the value of the arg must be strictly less than that value-->
+                <lowerThreshold arg="1">85</lowerThreshold>
+                <!--indicates what value the state should change to if ALL conditions are met-->
+                <stateChange num="1">1</stateChange>
+            </depGroup>
+
+        </dependencies>
+    </device>
+
+    
+
+    <device id="2">
+        <deviceName>Thermostat</deviceName>
+        <argument num="1">
+            <argVal>60</argVal>
+            <argType>Int</argType>
+        </argument>
+        <!--No Dependencies (i.e. no other device can cause the thermostat to change state)-->
+    </device>
+</deviceList>
