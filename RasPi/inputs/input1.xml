@@ -7,7 +7,7 @@
             <argVal>1</argVal>
             <argType>Bool</argType>
         </argument>
-        <argument num="1">
+        <argument num="2">
              <!--1 is speed setting on high, 0 is speed setting on low-->
             <argVal>1</argVal>
             <argType>Bool</argType>
